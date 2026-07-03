@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.test.distilledai.org"
+        }
+      ],
+      "destination": "https://test.distilledai.org/$1",
+      "permanent": true
+    }
+  ]
+}
