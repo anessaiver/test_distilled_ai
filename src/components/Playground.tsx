@@ -208,11 +208,11 @@ export function Playground() {
         </div>
       </header>
 
-      <section className="relative mx-auto grid w-full max-w-7xl gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[0.78fr_1.22fr] lg:px-8">
-        <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
+      <section className="relative mx-auto grid w-full max-w-7xl gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] lg:px-8">
+        <aside className="min-w-0 space-y-4 lg:sticky lg:top-24 lg:self-start">
           <div className="lab-panel rounded-[28px] p-5">
             <p className="font-mono text-xs uppercase tracking-[0.18em] text-truth">Cognitive Bias Playground</p>
-            <h1 className="mt-3 text-4xl font-black leading-[0.96] tracking-tight text-white sm:text-5xl">
+            <h1 className="mt-3 text-4xl font-black leading-[0.96] tracking-tight text-white xl:text-5xl">
               Trick first. Explain second. Jar forever.
             </h1>
             <p className="mt-4 text-sm leading-6 text-white/68">
@@ -220,11 +220,13 @@ export function Playground() {
             </p>
           </div>
 
-          <Shelf collected={collected} metaSeen={metaSeen} />
+          <div className="hidden lg:block">
+            <Shelf collected={collected} metaSeen={metaSeen} />
+          </div>
         </aside>
 
-        <section className="space-y-5">
-          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+        <section className="flex min-w-0 flex-col gap-5">
+          <div className="order-2 grid min-w-0 grid-cols-2 gap-3 lg:order-1 2xl:grid-cols-3">
             {demos.map((demo) => {
               const active = activeId === demo.id;
               const done = collected.includes(demo.id);
@@ -233,7 +235,7 @@ export function Playground() {
                   key={demo.id}
                   type="button"
                   onClick={() => setActiveId(demo.id)}
-                  className={`group min-h-[142px] rounded-[22px] border p-4 text-left transition active:translate-y-px ${
+                  className={`group min-h-[126px] min-w-0 rounded-[22px] border p-4 text-left transition active:translate-y-px sm:min-h-[142px] ${
                     active ? "border-truth/60 bg-truth/12" : "border-white/12 bg-white/5 hover:border-white/24 hover:bg-white/8"
                   }`}
                 >
@@ -253,6 +255,7 @@ export function Playground() {
           <AnimatePresence mode="wait">
             <motion.div
               key={activeId}
+              className="order-1 lg:order-2"
               initial={reduce ? false : { opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               exit={reduce ? undefined : { opacity: 0, y: -12 }}
@@ -262,8 +265,16 @@ export function Playground() {
             </motion.div>
           </AnimatePresence>
 
-          <FutureCabinet />
-          <ShareCard collected={collected} outcomes={outcomes} metaSeen={metaSeen} />
+          <div className="order-3 lg:hidden">
+            <Shelf collected={collected} metaSeen={metaSeen} />
+          </div>
+
+          <div className="order-4">
+            <FutureCabinet />
+          </div>
+          <div className="order-5">
+            <ShareCard collected={collected} outcomes={outcomes} metaSeen={metaSeen} />
+          </div>
         </section>
       </section>
 
@@ -1064,7 +1075,7 @@ function MetaModal({
       exit={{ opacity: 0 }}
     >
       <motion.section
-        className="lab-panel relative max-h-[92dvh] w-full max-w-3xl overflow-y-auto rounded-[30px] p-5 sm:p-7"
+        className="lab-panel relative max-h-[92dvh] w-full max-w-4xl overflow-y-auto rounded-[30px] p-5 sm:p-7"
         initial={{ opacity: 0, y: 28, scale: 0.96 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 16, scale: 0.98 }}
@@ -1080,7 +1091,7 @@ function MetaModal({
         </button>
         <div className="pr-12">
           <p className="font-mono text-xs uppercase tracking-[0.18em] text-gotcha">Meta alert</p>
-          <h2 className="mt-3 text-4xl font-black leading-[0.98] tracking-tight text-white sm:text-5xl">
+          <h2 className="mt-3 text-3xl font-black leading-[1.02] tracking-tight text-white sm:text-4xl">
             This site just used 4 documented psychological techniques on YOU while teaching you about them.
           </h2>
           <p className="mt-5 text-sm leading-6 text-white/68">

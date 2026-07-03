@@ -20,6 +20,9 @@
 # production
 /build
 
+# local QA artifacts
+/tmp
+
 # misc
 .DS_Store
 *.pem
